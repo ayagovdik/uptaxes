@@ -1,0 +1,31 @@
+{
+  "name": "uptaxes",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ayagovdik/uptaxes.git"
+  },
+  "keywords": [
+    "taxes"
+  ],
+  "author": "Alexander Yagovdik",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ayagovdik/uptaxes/issues"
+  },
+  "homepage": "https://github.com/ayagovdik/uptaxes#readme",
+  "dependencies": {
+    "bluebird": "^3.5.1",
+    "csvtojson": "^1.1.9",
+    "moment": "^2.19.2",
+    "node-fetch": "^1.7.3",
+    "numeral": "^2.0.6",
+    "sqlite3": "^3.1.13",
+    "text-table": "^0.2.0"
+  }
+}

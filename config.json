@@ -1,0 +1,8 @@
+{
+	"dbFilePath": "./db-uptaxes.sqlite3",
+	"rates": {
+		"usn": 0.03,
+		"vat": 0.2,
+		"income": 0.15
+	}
+}
