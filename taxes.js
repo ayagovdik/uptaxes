@@ -3,6 +3,7 @@
 const Promise = require('bluebird')
 const moment = require('moment')
 const numeral = require('numeral')
+const roundTo = require('round-to')
 const sqlite3 = require('sqlite3').verbose()
 const table = require('text-table')
 
@@ -12,10 +13,13 @@ const db = new sqlite3.Database(config.dbFilePath)
 
 console.log('node taxes.js fi m 2019 10')
 console.log('node taxes.js vat q 2019 1')
+console.log('node taxes.js vat p 2019')
 
 const type = process.argv[2]
 const periodType = process.argv[3]
 console.log('type, periodType', {type, periodType})
+
+const roundAmount = (amount) => roundTo(amount, 2)
 
 let date
 let startDate
@@ -36,6 +40,11 @@ switch (periodType) {
 		date = moment(`${process.argv[4]}-${process.argv[5]}`, 'YYYY-M')//moment([process.argv[4], process.argv[5]])
 		startDate = date.startOf('month').format('YYYY-MM-DD 00:00:00')
 		endDate = date.endOf('month').format('YYYY-MM-DD 23:59:59')
+		break
+	case 'p':
+		// date = moment(`${process.argv[4]}-${process.argv[5]}`, 'YYYY-Q')
+		startDate = '2019-01-01 00:00:00'
+		endDate = '2019-06-30 23:59:59'
 		break
 	default:
 		throw new Error('Wrong period Type')
@@ -65,9 +74,8 @@ const taxes = {
 					]
 				]
 				const total = rows.reduce((total, row) => {
-					// @TODO: ay p0 check when to round
-					const sum = Math.round(row.amount * row.rate * 100) / 100
-					const vat = Math.round(sum * config.rates.vat * 100) / 100
+					const sum = roundAmount(row.amount * row.rate)
+					const vat = roundAmount(sum * config.rates.vat / 100)
 					const date = moment(row.date, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM-DD')
 					data.push([
 						row.id,
@@ -112,9 +120,8 @@ const taxes = {
 					]
 				]
 				const total = rows.reduce((total, row) => {
-					// @TODO: ay p0 check when to round
-					const sum = Math.round(row.amount * row.rate * 100) / 100
-					const fi = Math.round(sum * config.rates.income * 100) / 100
+					const sum = roundAmount(row.amount * row.rate)
+					const fi = roundAmount(sum * config.rates.income / 100)
 					const date = moment(row.date, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM-DD')
 					data.push([
 						row.id,
@@ -161,9 +168,8 @@ const taxes = {
 					]
 				]
 				const total = rows.reduce((total, row) => {
-					// @TODO: ay p0 check when to round
-					const sum = Math.round(row.amount * row.rate * 100) / 100
-					const usn = Math.round(sum * config.rates.usn * 100) / 100
+					const sum = roundAmount(row.amount * row.rate)
+					const usn = roundAmount(sum * config.rates.usn / 100)
 					const date = moment(row.date, 'YYYY-MM-DD hh:mm:ss').format('YYYY-MM-DD')
 					data.push([
 						row.id,
