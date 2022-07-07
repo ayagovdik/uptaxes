@@ -22,7 +22,7 @@
   "dependencies": {
     "bluebird": "^3.5.1",
     "csvtojson": "^1.1.9",
-    "moment": "^2.19.2",
+    "moment": "^2.29.4",
     "node-fetch": "^1.7.3",
     "numeral": "^2.0.6",
     "round-to": "^4.0.0",
